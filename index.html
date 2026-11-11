@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="MediCare AI: an AI-powered patient assistance system that reminds, listens, monitors and cares, with Myra, your voice health companion. Team TechTouch, Bal Vigyan 2026.">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>MediCare AI</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600&family=Merriweather:wght@400;700;900&family=Noto+Sans+Devanagari:wght@600;700&display=swap">
+<style>
+/* Layout: sticker-style scroll story. Stacked colour bands (teal hero, blush, sky, orange), thick ink outlines, offset shadows, bento grids, marquee strips between bands. */
+:root{
+  --display:'Anton','Impact','Arial Narrow',sans-serif;
+  --body:'Merriweather',Georgia,'Times New Roman',serif;
+  --hand:'Caveat','Comic Sans MS',cursive;
+  --deva:'Noto Sans Devanagari','Nirmala UI',sans-serif;
+  --bg:#F7F0DC; --surface:#FFFBEF; --fg:#17120F; --muted:#5B5249; --line:#17120F;
+  --band-pink:#F9D2E0; --band-sky:#C6E5E8; --hotText:#B80F66; --tealText:#0C7561;
+  --sky:#BEE3E8; --ink:#17120F; --teal:#22A58B; --hot:#FF5CAA; --orange:#FF8A2B; --mint:#35E8C4; --butter:#FFD84D; --violet:#7A4DFF; --blush:#FAC8DA;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1918; --surface:#182A29; --fg:#F7F0DC; --muted:#B8B09F; --line:#F7F0DC;
+  --band-pink:#2B1823; --band-sky:#102B33; --hotText:#FF86C2; --tealText:#4BE3C3; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1918; --surface:#182A29; --fg:#F7F0DC; --muted:#B8B09F; --line:#F7F0DC;
+  --band-pink:#2B1823; --band-sky:#102B33; --hotText:#FF86C2; --tealText:#4BE3C3; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{background:var(--bg);color:var(--fg);font:400 16px/1.7 var(--body);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--teal)}
+h1,h2,h3,h4,p,ul{margin:0}
+ul{padding:0;list-style:none}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band{padding-block:clamp(56px,8vw,104px);position:relative;overflow:hidden}
+.b-cream{background:var(--bg)}.b-blush{background:var(--band-pink)}.b-sky{background:var(--band-sky)}
+.b-teal{background:var(--teal);color:var(--ink)}.b-orange{background:var(--orange);color:var(--ink)}.b-hot{background:var(--hot);color:var(--ink)}
+.big{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(42px,7.4vw,92px);line-height:.96;letter-spacing:.01em;text-wrap:balance}
+.big em{font-style:normal;background:var(--hot);color:var(--ink);padding:0 .14em;border:3px solid var(--line);border-radius:.14em;box-shadow:4px 4px 0 var(--line);display:inline-block;transform:rotate(-1.5deg)}
+.kick{font-family:var(--hand);font-size:30px;line-height:1;color:var(--hotText);margin-bottom:6px;display:block}
+.b-teal .kick,.b-orange .kick,.b-hot .kick{color:var(--ink)}
+.lede{font-size:clamp(16px,1.6vw,19px);max-width:62ch;margin-top:18px}
+.muted{color:var(--muted)}
+.chip{display:inline-block;border:2.5px solid var(--line);border-radius:999px;padding:3px 13px;font:700 12.5px/1.6 var(--body);background:var(--surface);color:var(--fg)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.stk{border:3px solid var(--line);box-shadow:5px 5px 0 var(--line);border-radius:20px;background:var(--surface);color:var(--fg)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:3px solid var(--line);border-radius:999px;padding:11px 24px;font:900 15px/1.2 var(--body);text-decoration:none;color:var(--ink);background:var(--butter);box-shadow:4px 4px 0 var(--line);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--line)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
+.btn.pink{background:var(--hot)}.btn.mint{background:var(--mint)}.btn.white{background:var(--surface);color:var(--fg)}
+:focus-visible{outline:4px solid var(--violet);outline-offset:3px}
+.hand{font-family:var(--hand);font-size:1.25em}
+.tag{display:inline-block;font:900 11.5px/1 var(--body);letter-spacing:.12em;text-transform:uppercase}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--teal);border-bottom:3px solid var(--line);color:var(--ink)}
+.nav .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;padding-block:10px}
+.brand{font:400 26px/1 var(--display);letter-spacing:.02em;text-decoration:none;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.brand i{width:26px;height:26px;border-radius:50%;background:var(--hot);border:3px solid var(--ink);display:grid;place-items:center;font:900 15px/1 var(--body);font-style:normal}
+.nav-links{order:3;width:100%;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav-links a{white-space:nowrap;text-decoration:none;font:700 13px/1 var(--body);padding:8px 11px;border-radius:999px;border:2px solid transparent}
+.nav-links a:hover{border-color:var(--ink);background:var(--mint)}
+.nav .btn{margin-left:auto;padding:7px 16px;font-size:13px;box-shadow:3px 3px 0 var(--ink);border-color:var(--ink)}
+@media(min-width:1000px){.nav-links{order:0;width:auto;flex:1;justify-content:center}.nav .btn{margin-left:0}}
+
+/* marquee */
+.marq{background:var(--mint);border-block:3px solid var(--line);overflow:hidden;color:var(--ink);padding-block:10px}
+.marq.p{background:var(--hot)}.marq.o{background:var(--butter)}
+.marq div{display:flex;width:max-content;animation:slide 28s linear infinite}
+.marq span{font:400 clamp(22px,3.4vw,34px)/1 var(--display);text-transform:uppercase;white-space:nowrap;padding-right:28px;letter-spacing:.03em}
+.marq span b{display:inline-block;width:.7em;height:.7em;margin-right:28px;vertical-align:-.02em;background:var(--ink);clip-path:polygon(35% 0,65% 0,65% 35%,100% 35%,100% 65%,65% 65%,65% 100%,35% 100%,35% 65%,0 65%,0 35%,35% 35%)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* reveal: visible at rest, animates when scrolled to */
+.rv.go{animation:rise .7s cubic-bezier(.2,.8,.2,1) backwards}
+@keyframes rise{from{opacity:0;transform:translateY(26px) rotate(.6deg)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-12px) rotate(calc(var(--r,0deg) + 5deg))}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes talk{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.45)}}
+.fl{position:absolute;animation:bob 4.5s ease-in-out infinite;pointer-events:none;z-index:2}
+svg .o{stroke:var(--line);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.eyes{transform-box:fill-box;transform-origin:center;animation:blink 4.2s infinite}
+.mouth{transform-box:fill-box;transform-origin:top center}
+.talk .mouth{animation:talk .45s infinite}
+
+/* hero */
+.hero{padding-top:clamp(32px,5vw,64px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:36px;align-items:center}
+@media(max-width:860px){.hero-grid{grid-template-columns:minmax(0,1fr)}}
+.hero h1{font:400 clamp(64px,13vw,168px)/.88 var(--display);text-transform:uppercase;letter-spacing:.005em;margin:6px 0 10px}
+.hero h1 em{font-style:normal;background:var(--blush);border:4px solid var(--ink);border-radius:.12em;padding:0 .12em;display:inline-block;transform:rotate(-2deg);box-shadow:6px 6px 0 var(--ink)}
+.hero .tagline{font:700 clamp(17px,2vw,22px)/1.5 var(--body);max-width:30em}
+.scribble{display:block;width:min(360px,70%);margin-top:6px}
+.team{margin:20px 0 8px;font:400 22px/1 var(--display);text-transform:uppercase;letter-spacing:.06em}
+.stage{position:relative;min-height:470px;display:grid;place-items:center}
+.burst{position:absolute;display:grid;place-items:center;text-align:center;width:104px;height:104px;color:var(--ink);font:900 12px/1.15 var(--body);text-transform:uppercase;letter-spacing:.04em;z-index:4}
+.burst svg{position:absolute;inset:0;width:100%;height:100%}
+.burst span{position:relative;max-width:70%}
+.burst polygon{fill:var(--c);stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round}
+
+/* device mockup */
+.dev{background:#1d1d1d;border:4px solid var(--ink);border-radius:26px;padding:12px;width:min(340px,100%);box-shadow:8px 8px 0 var(--ink);position:relative}
+.dev .scr{background:var(--sky);border-radius:14px;padding:14px;color:#17120F;display:grid;gap:10px;position:relative;overflow:hidden}
+.scr .tt{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.scr .tt b{font:400 34px/1 var(--display);letter-spacing:.03em}
+.scr .tt span{font:700 12px/1.3 var(--body)}
+.scr .wx{font:700 12px/1.3 var(--body);background:#fff7;border-radius:8px;padding:5px 9px}
+.scr .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.scr .grid span{display:grid;place-items:center;text-align:center;border:3px solid #17120F;border-radius:12px;min-height:60px;font:400 19px/1.05 var(--display);text-transform:uppercase;letter-spacing:.03em;padding:6px;color:#17120F}
+.dev .led{display:flex;gap:7px;justify-content:center;margin-top:9px}
+.dev .led i{width:12px;height:12px;border-radius:50%;border:2px solid #000;display:block}
+.ecgbox{overflow:hidden;position:relative;height:90px;border-radius:12px;background:#0d2a28;border:3px solid var(--line)}
+.ecgbox svg{position:absolute;left:0;top:5px;animation:ecg 1.6s linear infinite}
+.ecgbox::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0d2a28,transparent 14%,transparent 86%,#0d2a28)}
+@keyframes ecg{to{transform:translateX(-204px)}}
+.ecgbox path{fill:none;stroke:#4DF7C6;stroke-width:3;stroke-linejoin:round}
+.ecgbox.grid-bg{background:#0d2a28 repeating-linear-gradient(0deg,#ffffff10 0 1px,transparent 1px 18px),repeating-linear-gradient(90deg,#ffffff10 0 1px,transparent 1px 18px)}
+
+/* generic cards/grids */
+.grid{display:grid;gap:22px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.card{padding:22px;min-width:0}
+.card h3{font:400 28px/1.05 var(--display);text-transform:uppercase;letter-spacing:.02em;margin-bottom:8px}
+.card p{font-size:15px}
+.ico{width:64px;height:64px;border-radius:16px;border:3px solid var(--line);display:grid;place-items:center;font:400 30px/1 var(--display);margin-bottom:12px;color:var(--ink)}
+.head{display:flex;flex-direction:column;margin-bottom:38px}
+
+/* problem */
+.stat{background:var(--hot);color:var(--ink);padding:30px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.stat .n{font:400 clamp(90px,16vw,170px)/.85 var(--display)}
+.stat small{font:400 12px/1.5 var(--body);opacity:.85}
+.prob{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:22px}
+.prob .col{display:grid;gap:22px}
+@media(max-width:820px){.prob{grid-template-columns:minmax(0,1fr)}}
+
+/* solution bento */
+.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:34px}
+@media(max-width:900px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.bento{grid-template-columns:minmax(0,1fr)}}
+.bento .stk{padding:18px;transition:transform .2s}
+.bento .stk:hover{transform:translate(-3px,-3px) rotate(-1deg)}
+.bento h3{font:900 15px/1.3 var(--body);margin-bottom:4px}
+.bento p{font-size:13.5px;line-height:1.55;color:var(--muted)}
+.bento .ico{width:48px;height:48px;font-size:22px;border-radius:12px;margin-bottom:10px}
+
+/* where */
+.where .stk{padding:20px}
+.where h3{font:400 26px/1 var(--display);text-transform:uppercase;margin:10px 0 6px;letter-spacing:.02em}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+.tab{font:900 14px/1.2 var(--body);padding:11px 18px;border:3px solid var(--line);border-radius:999px;background:var(--surface);color:var(--fg);cursor:pointer;box-shadow:3px 3px 0 var(--line)}
+.tab[aria-selected="true"]{background:var(--hot);color:var(--ink);transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+.uc{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px}
+@media(max-width:860px){.uc{grid-template-columns:minmax(0,1fr)}}
+.uc h3{font:400 clamp(34px,5vw,54px)/1 var(--display);text-transform:uppercase;margin-bottom:12px}
+.uc .sub{font:900 11.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--hotText);margin:18px 0 8px;display:block}
+.uc li{padding-left:26px;position:relative;margin-bottom:8px;font-size:15px}
+.uc li::before{content:"";position:absolute;left:0;top:.5em;width:14px;height:14px;background:var(--teal);border:2.5px solid var(--line);border-radius:50%}
+.quote{background:var(--butter);color:var(--ink);padding:24px;position:relative}
+.quote q{font:700 19px/1.5 var(--body);display:block;quotes:none}
+.quote q::before{content:"\201C";font:400 80px/0 var(--display);position:absolute;top:34px;left:12px;opacity:.25}
+.quote cite{display:block;margin-top:14px;font:600 24px/1 var(--hand)}
+.uc .side{display:grid;gap:22px;align-content:start}
+.who{display:flex;flex-wrap:wrap;gap:8px}
+
+/* flow */
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+@media(max-width:900px){.flow{grid-template-columns:minmax(0,1fr)}}
+.step{padding:18px;cursor:pointer;text-align:left;font:inherit;color:var(--fg);background:var(--surface);border:3px solid var(--line);border-radius:20px;box-shadow:5px 5px 0 var(--line);transition:transform .25s,background .25s;position:relative;display:block;width:100%}
+.step .n{font:400 46px/1 var(--display);color:var(--hotText)}
+.step h3{font:400 28px/1 var(--display);text-transform:uppercase;margin:2px 0 8px}
+.step p{font-size:13.5px;line-height:1.55;color:var(--muted)}
+.step.on{background:var(--hot);color:var(--ink);transform:translateY(-10px) rotate(-1deg)}
+.step.on .n{color:var(--ink)}.step.on p{color:var(--ink)}
+@media(max-width:900px){.step.on{transform:translateX(8px)}}
+.ex{margin-top:30px;padding:22px;display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;background:var(--ink);color:#F7F0DC;border-radius:20px;border:3px solid var(--line)}
+:root[data-theme="dark"] .ex{background:#050c0b}
+.ex b{font:400 20px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--mint)}
+.ex #exline{font:700 18px/1.4 var(--body);flex:1;min-width:220px}
+
+/* arch */
+.scrollx{overflow-x:auto;padding:4px 4px 14px}
+.arch{min-width:780px;width:100%;display:block}
+.arch text{fill:var(--fg);font-family:var(--body)}
+.arch .t1{font-size:16px;font-weight:900}
+.arch .t2{font-size:12.5px;font-weight:400}
+.arch .lab{font-size:12px;font-weight:700;fill:var(--hotText)}
+.arch .ln{stroke:var(--line);stroke-width:3;fill:none;stroke-dasharray:7 6;animation:dash 1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-26}}
+.arch .nd{fill:var(--surface);stroke:var(--line);stroke-width:3}
+.arch .pulse{fill:var(--hot);stroke:var(--line);stroke-width:2}
+.arch .pi{fill:var(--teal);stroke:var(--line);stroke-width:4}
+.arch .pi-t{fill:var(--ink)}
+
+/* day */
+.days{display:flex;gap:10px;overflow-x:auto;padding:4px 4px 16px;margin-bottom:6px}
+.dbtn{flex:0 0 auto;border:3px solid var(--line);border-radius:16px;background:var(--surface);color:var(--fg);padding:10px 16px;cursor:pointer;font:inherit;text-align:left;box-shadow:3px 3px 0 var(--line);min-width:128px}
+.dbtn b{display:block;font:400 24px/1 var(--display);letter-spacing:.03em}
+.dbtn span{font-size:12px;font-weight:700}
+.dbtn[aria-selected="true"]{background:var(--teal);color:var(--ink)}
+.dcard{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:22px;align-items:stretch}
+@media(max-width:760px){.dcard{grid-template-columns:minmax(0,1fr)}}
+.dcard h3{font:400 clamp(36px,5vw,58px)/1 var(--display);text-transform:uppercase;margin:4px 0 10px}
+.bigtime{font:400 clamp(60px,10vw,110px)/.9 var(--display);color:var(--hotText)}
+.state{padding:22px;display:grid;gap:14px;align-content:center;justify-items:center;text-align:center}
+.leds{display:flex;gap:12px}
+.leds i{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);background:#00000020;transition:background .3s,box-shadow .3s}
+.leds i.r.on{background:#FF4040;box-shadow:0 0 22px #FF4040}.leds i.y.on{background:#FFD84D;box-shadow:0 0 22px #FFD84D}.leds i.g.on{background:#35E86A;box-shadow:0 0 22px #35E86A}
+.buzz{font:400 20px/1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+
+/* components */
+.cgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+@media(max-width:1000px){.cgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.cgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cbtn{background:var(--surface);color:var(--fg);border:3px solid var(--line);border-radius:18px;padding:10px 10px 12px;cursor:pointer;text-align:center;font:inherit;box-shadow:4px 4px 0 var(--line);transition:transform .2s;min-width:0}
+.cbtn:hover{transform:translateY(-4px) rotate(-1.5deg)}
+.cbtn svg{width:100%;height:auto;max-height:88px;display:block}
+.cbtn b{display:block;font:900 13px/1.25 var(--body);margin-top:6px}
+.cbtn span{display:block;font-size:11.5px;line-height:1.35;color:var(--muted)}
+.cbtn[aria-pressed="true"]{background:var(--butter);color:var(--ink);transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+.cbtn[aria-pressed="true"] span{color:var(--ink)}
+.cdet{margin-top:30px;display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:26px;padding:26px}
+@media(max-width:760px){.cdet{grid-template-columns:minmax(0,1fr)}}
+.cdet .pic{background:var(--sky);border:3px solid var(--line);border-radius:18px;padding:16px;display:grid;place-items:center;color:#17120F}
+.cdet .pic svg{width:100%;height:auto}
+.cdet h3{font:400 clamp(34px,5vw,54px)/1 var(--display);text-transform:uppercase}
+.cdet .what{font:700 15px/1.3 var(--body);color:var(--hotText);margin:4px 0 10px;display:block}
+.cdet li{padding-left:22px;position:relative;margin:6px 0;font-size:14.5px}
+.cdet li::before{content:"+";position:absolute;left:0;font:900 17px/1.5 var(--body);color:var(--hotText)}
+.specs{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.specs span{border:2.5px solid var(--line);border-radius:12px;padding:5px 11px;font-size:12.5px;background:var(--bg)}
+.specs b{font-weight:900}
+.cap{font-family:var(--hand);font-size:22px;color:var(--muted);margin-top:8px;display:block}
+
+/* myra */
+.myra-wrap{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:28px;align-items:start}
+@media(max-width:860px){.myra-wrap{grid-template-columns:minmax(0,1fr)}}
+.myra-fig{background:var(--violet);border:3px solid var(--line);border-radius:28px;box-shadow:6px 6px 0 var(--line);padding:22px;position:relative;display:grid;place-items:center;aspect-ratio:1/1;max-width:300px;width:100%}
+.myra-fig svg{width:88%;height:auto}
+.bubble{position:absolute;right:-8px;top:-18px;background:var(--surface);color:var(--fg);border:3px solid var(--line);border-radius:18px 18px 18px 4px;padding:6px 14px;font:400 20px/1.1 var(--display);letter-spacing:.03em;text-transform:uppercase;box-shadow:3px 3px 0 var(--line);transform:rotate(4deg)}
+.mp h3{font:400 clamp(34px,5vw,56px)/1 var(--display);text-transform:uppercase;margin-bottom:12px}
+.mp .steps{display:grid;gap:12px;margin:20px 0}
+.mp .steps li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
+.mp .steps i{font:400 26px/1 var(--display);font-style:normal;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:var(--mint);border:3px solid var(--line);color:var(--ink)}
+.mp .steps b{display:block;font:900 15px/1.3 var(--body)}
+.mp .steps span{font-size:14px;color:var(--muted);line-height:1.55}
+.lang{display:flex;gap:8px;margin-bottom:12px}
+.lang button{font:900 14px/1 var(--body);padding:9px 16px;border-radius:999px;border:3px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--orange);color:var(--ink)}
+.aa{padding:18px 22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:6px}
+.aa .big2{font:400 64px/1 var(--display)}
+.aa .hi{font:700 22px/1.3 var(--deva)}
+.aa .say{font:700 19px/1.4 var(--body)}
+[lang="hi"]{font-family:var(--deva)}
+
+/* features */
+.feat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;align-items:center;margin-bottom:clamp(54px,8vw,96px)}
+.feat:last-child{margin-bottom:0}
+.feat.flip .fx{order:2}
+@media(max-width:860px){.feat{grid-template-columns:minmax(0,1fr)}.feat.flip .fx{order:0}}
+.feat h3{font:400 clamp(34px,5vw,58px)/1 var(--display);text-transform:uppercase;margin-bottom:10px}
+.fsteps{display:grid;gap:10px;margin:18px 0}
+.fsteps li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;line-height:1.55}
+.fsteps li b{flex:0 0 auto;background:var(--ink);color:#F7F0DC;border-radius:999px;padding:1px 11px;font:900 12.5px/1.7 var(--body)}
+:root[data-theme="dark"] .fsteps li b{background:#F7F0DC;color:#17120F}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .fsteps li b{background:#F7F0DC;color:#17120F}}
+.demo{padding:22px;min-width:0}
+.demo h4{font:900 11.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.rem{display:grid;gap:12px}
+.rem .top{display:flex;align-items:center;gap:14px;background:var(--butter);color:var(--ink);border:3px solid var(--line);border-radius:16px;padding:14px}
+.rem .top b{font:400 40px/1 var(--display)}
+.rem .top span{font:700 14px/1.35 var(--body)}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.three button{font:400 clamp(20px,3.2vw,28px)/1 var(--display);text-transform:uppercase;padding:18px 6px;border-radius:16px;border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);cursor:pointer;color:var(--ink);letter-spacing:.04em}
+.three button:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
+.three .tk{background:var(--mint)}.three .sn{background:var(--butter)}.three .sk{background:var(--hot)}
+.log{border:3px dashed var(--line);border-radius:14px;padding:12px 14px;font-size:14px;min-height:76px}
+.log b{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--hotText)}
+.ring{width:150px;height:150px;position:relative;margin:0 auto}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:14}
+.ring .bg{stroke:var(--bg)}.ring .fg{stroke:var(--hot);stroke-linecap:round;stroke-dasharray:408;stroke-dashoffset:0}
+.ring .v{position:absolute;inset:0;display:grid;place-items:center;font:400 58px/1 var(--display)}
+.read{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.read div{border:3px solid var(--line);border-radius:16px;padding:12px;text-align:center;background:var(--bg)}
+.read b{display:block;font:400 46px/1 var(--display);color:var(--hotText)}
+.read span{font-size:12px;font-weight:700}
+.bpm{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;flex-wrap:wrap;gap:6px}
+.bpm b{font:400 54px/1 var(--display);color:var(--hotText)}
+
+/* apps */
+.phone{width:170px;border:4px solid var(--line);border-radius:26px;padding:10px;background:#1d1d1d;box-shadow:5px 5px 0 var(--line);flex:0 0 auto}
+.phone .s{background:var(--bg);color:var(--fg);border-radius:16px;padding:12px;font-size:11.5px;line-height:1.35;display:grid;gap:8px;min-height:240px}
+.phone .s b{font:400 22px/1 var(--display);text-transform:uppercase}
+.phone .row{background:var(--surface);border:2px solid var(--line);border-radius:10px;padding:7px 9px;display:flex;justify-content:space-between;gap:6px;align-items:center}
+.phone .ok{background:var(--mint);color:var(--ink);border-radius:999px;padding:0 7px;font-weight:900;font-size:10px}
+.phone .no{background:var(--hot);color:var(--ink);border-radius:999px;padding:0 7px;font-weight:900;font-size:10px}
+.app{display:flex;gap:24px;align-items:center;padding:26px;flex-wrap:wrap}
+.app .tx{flex:1;min-width:220px}
+.app h3{font:400 clamp(30px,4vw,44px)/1 var(--display);text-transform:uppercase;margin-bottom:10px}
+
+/* safety */
+.safe .stk{padding:22px}
+.safe h3{font:900 16px/1.3 var(--body);margin:12px 0 4px}
+.safe p{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* tech */
+.layers{display:grid;gap:12px}
+.layer{display:grid;grid-template-columns:minmax(0,210px) minmax(0,1fr);gap:14px;align-items:center;border:3px solid var(--line);border-radius:18px;padding:14px 18px;box-shadow:5px 5px 0 var(--line);color:var(--ink)}
+.layer h3{font:400 24px/1 var(--display);text-transform:uppercase;letter-spacing:.03em}
+.layer .chips span{background:#fffbefcc}
+@media(max-width:640px){.layer{grid-template-columns:minmax(0,1fr)}}
+
+/* circuit */
+.tblwrap{overflow-x:auto}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:460px;font-size:14px}
+th,td{text-align:left;padding:10px 14px;border-bottom:2px solid var(--line)}
+th{font:900 11.5px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;background:var(--butter);color:var(--ink)}
+tr:last-child td{border-bottom:0}
+td:nth-child(3){font-family:ui-monospace,Menlo,monospace;font-weight:700;color:var(--hotText)}
+.circ{min-width:800px;width:100%;display:block}
+.circ text{fill:var(--fg);font-family:var(--body)}
+.circ .pn{font-size:12px;font-weight:700;font-family:ui-monospace,Menlo,monospace}
+.circ .bx{fill:var(--surface);stroke:var(--line);stroke-width:3}
+.circ .ard{fill:var(--teal);stroke:var(--line);stroke-width:3}
+.circ .ard-t{fill:var(--ink)}
+.circ .w{stroke-width:4;stroke-linecap:round;fill:none}
+
+/* code */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:20px}
+.nums .stk{padding:22px;text-align:center}
+.nums b{display:block;font:400 clamp(52px,7vw,84px)/1 var(--display);color:var(--hotText)}
+.nums span{font:700 14px/1.3 var(--body)}
+.git{display:inline-block;background:var(--ink);color:#F7F0DC;border-radius:12px;padding:10px 16px;font:700 15px/1.3 ui-monospace,Menlo,monospace;text-decoration:none;word-break:break-all}
+
+/* next */
+.nx{padding:22px;position:relative}
+.nx .n{font:400 56px/1 var(--display);color:var(--hotText)}
+.nx h3{font:900 17px/1.3 var(--body);margin:4px 0 6px}
+.nx p{font-size:14px;color:var(--muted)}
+
+/* thanks */
+.thanks h2{font:400 clamp(70px,17vw,230px)/.86 var(--display);text-transform:uppercase}
+.thanks .row{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px;align-items:center}
+.mailbox{display:inline-flex;gap:10px;align-items:center;border:3px solid var(--ink);border-radius:999px;background:var(--surface);color:var(--fg);padding:6px 8px 6px 18px;font:700 14px/1.3 var(--body)}
+.mailbox button{border:2.5px solid var(--ink);border-radius:999px;background:var(--butter);color:var(--ink);padding:5px 12px;font:900 12px/1 var(--body);cursor:pointer}
+footer{background:var(--ink);color:#F7F0DC;padding:20px 0;font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top"><i>+</i>MediCare AI</a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a><a href="#solution">Solution</a><a href="#usecases">Use cases</a><a href="#how">How it works</a><a href="#components">Components</a><a href="#myra">Myra</a><a href="#features">Features</a><a href="#circuit">Circuit</a><a href="#code">Code</a><a href="#next">What's next</a>
+    </div>
+    <a class="btn mint" href="https://medicare-ai.pvproyals.in" target="_blank" rel="noopener">Try the app &rarr;</a>
+  </div>
+</nav>
+
+<main id="top">
+<!-- HERO -->
+<header class="band b-teal hero">
+  <div class="wrap hero-grid">
+    <div class="rv">
+      <span class="chip" style="background:var(--butter);color:var(--ink)">Bal Vigyan 2026</span>
+      <h1>Medi<br>Care <em>AI</em></h1>
+      <p class="tagline">An AI-powered patient assistance system that reminds, listens, monitors and cares, with Myra, your voice health companion.</p>
+      <svg class="scribble" viewBox="0 0 360 20" aria-hidden="true"><path d="M4 12 C60 2 120 18 180 9 S300 4 356 11" fill="none" stroke="#FF8A2B" stroke-width="7" stroke-linecap="round"/></svg>
+      <div class="team">Team TechTouch</div>
+      <div class="chips" style="margin-bottom:26px"><span class="chip">Raspberry Pi 5</span><span class="chip">Arduino</span><span class="chip">Google Gemini AI</span><span class="chip">English + <span lang="hi">हिन्दी</span></span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:14px">
+        <a class="btn pink" href="#how">See how it works</a>
+        <a class="btn white" href="https://medicare-ai.pvproyals.in" target="_blank" rel="noopener">Try the app &rarr;</a>
+      </div>
+    </div>
+    <div class="stage rv" aria-hidden="true">
+      <div class="fl" style="left:2%;top:4%;--r:-8deg"><svg width="62" height="56" viewBox="0 0 62 56"><path class="o" d="M31 52 C6 34 4 14 18 8 C25 5 31 10 31 16 C31 10 37 5 44 8 C58 14 56 34 31 52Z" fill="#FF5CAA"/></svg></div>
+      <div class="fl" style="right:4%;top:2%;--r:10deg;animation-delay:-1.5s"><svg width="66" height="44" viewBox="0 0 66 44"><g transform="rotate(-25 33 22)"><rect class="o" x="4" y="8" width="58" height="28" rx="14" fill="#fff"/><path class="o" d="M33 8h15a14 14 0 0 1 0 28H33z" fill="#FFD84D"/></g></svg></div>
+      <div class="fl" style="left:0;bottom:10%;--r:6deg;animation-delay:-3s"><svg width="50" height="50" viewBox="0 0 50 50"><path class="o" d="M18 4h14v14h14v14H32v14H18V32H4V18h14z" fill="#35E8C4"/></svg></div>
+      <div class="burst" style="right:-2%;top:30%;--c:#FFD84D;transform:rotate(12deg)"><svg viewBox="-52 -52 104 104" data-burst="14"></svg><span>Works offline!</span></div>
+      <div class="burst" style="left:-3%;top:44%;--c:#FAC8DA;transform:rotate(-10deg)"><svg viewBox="-52 -52 104 104" data-burst="12"></svg><span lang="hi" style="font-family:var(--deva)">हिन्दी</span><span style="position:absolute;bottom:20px;font-size:9px">+ English</span></div>
+      <div class="dev" id="heroDev">
+        <div class="scr">
+          <div class="tt"><b>10:42 A.M.</b><span>Tue, 10 Nov</span></div>
+          <div class="wx">28&deg;C &middot; Air quality: Moderate</div>
+          <div class="grid"><span style="background:#35E8C4">Ask MYRA</span><span style="background:#FF5CAA">Monitor</span><span style="background:#FF8A2B">Reminders</span><span style="background:#FFD84D">Setup</span></div>
+        </div>
+        <div class="led"><i style="background:#FF4040"></i><i style="background:#FFD84D"></i><i style="background:#35E86A"></i></div>
+      </div>
+      <div style="position:absolute;left:-4%;bottom:-2%;width:150px;z-index:3" id="heroMyra"></div>
+      <div style="position:absolute;right:-1%;bottom:-3%;width:100px;z-index:3" id="heroElder"></div>
+      <div style="position:absolute;right:20%;bottom:-6%;width:96px;z-index:3" id="heroDoc"></div>
+      <div class="bubble" style="right:auto;left:16%;top:-4%;background:#fff;color:#17120F;z-index:5">Hey Myra!</div>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:46px"><div class="ecgbox grid-bg rv" role="img" aria-label="Animated ECG line"><svg id="heroEcg" height="80"></svg></div></div>
+</header>
+
+<div class="marq" aria-hidden="true"><div data-marq="MediCare AI|Team TechTouch|Bal Vigyan 2026|Hey Myra!"></div></div>
+
+<!-- PROBLEM -->
+<section class="band b-blush" id="problem">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">the problem</span><h2 class="big">Why we built<br>MediCare <em>AI</em></h2></div>
+    <div class="prob">
+      <div class="stk stat rv">
+        <div class="n"><span class="count" data-to="50">50</span>%</div>
+        <p style="font:900 17px/1.4 var(--body)">of patients with long-term illnesses do not take their medicines as prescribed.</p>
+        <small>Source: World Health Organization, "Adherence to Long-Term Therapies: Evidence for Action" (2003), figure for developed countries.</small>
+      </div>
+      <div class="col">
+        <div class="stk card rv"><div class="ico" style="background:var(--butter)">x2</div><h3>Forgotten or double doses</h3><p>Elders taking several medicines every day easily lose track of what they took and when.</p></div>
+        <div class="stk card rv"><div class="ico" style="background:var(--sky)">Aa</div><h3>Technology is hard for elders</h3><p>Tiny text, many menus and English-only apps keep older patients away from digital help.</p></div>
+        <div class="stk card rv"><div class="ico" style="background:var(--mint)">?</div><h3>No one to ask</h3><p>Simple health questions often wait until the next doctor visit, and families may live far away.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="band b-cream" id="solution">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">our solution</span><h2 class="big">MediCare AI,<br>a care <em>buddy</em> at home</h2>
+      <p class="lede">A Raspberry Pi based home device with a touchscreen, voice assistant and health sensors, plus a web app that every patient can open on their phone.</p></div>
+    <div class="bento" id="bento"></div>
+  </div>
+</section>
+
+<div class="marq p" aria-hidden="true"><div data-marq="Reminds|Listens|Monitors|Cares"></div></div>
+
+<!-- WHERE -->
+<section class="band b-sky where" id="where">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">where it fits</span><h2 class="big">Where it can be <em>used</em></h2></div>
+    <div class="grid g3" id="whereGrid"></div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="band b-cream" id="usecases">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">seven real situations</span><h2 class="big">Use <em>cases</em></h2></div>
+    <div class="tabs" role="tablist" aria-label="Use cases" id="ucTabs"></div>
+    <div id="ucPanel" class="rv"></div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="band b-orange" id="how">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">same five steps, every time</span><h2 class="big">How MediCare AI <em>works</em></h2>
+      <p class="lede">Every interaction follows the same five steps, whether the patient speaks, touches the screen or a reminder is due.</p></div>
+    <div class="flow" id="flow"></div>
+    <div class="ex"><b>Example</b><div id="exline" aria-live="polite"></div></div>
+  </div>
+</section>
+
+<!-- ARCH -->
+<section class="band b-sky" id="arch">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">under the hood</span><h2 class="big">System <em>architecture</em></h2>
+      <p class="lede">Raspberry Pi 5 is the brain of the system. Everything else talks to it.</p></div>
+    <div class="stk scrollx rv" style="padding:16px"><svg class="arch" viewBox="0 0 900 520" id="archSvg" role="img" aria-label="Architecture diagram: the Raspberry Pi 5 connects to two Arduinos by USB serial, a Bluetooth speaker with microphone, the internet over HTTPS and the MediCare app through a Cloudflare Tunnel."></svg></div>
+    <div class="chips" style="margin-top:22px"><span class="chip">Inside the Pi: Myra voice assistant</span><span class="chip">Reminder engine</span><span class="chip">Health monitor service</span><span class="chip">SQLite database</span><span class="chip">Web server (Flask)</span></div>
+  </div>
+</section>
+
+<!-- DAY -->
+<section class="band b-cream" id="day">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">tap a time</span><h2 class="big">A day with <em>MediCare AI</em></h2></div>
+    <div class="days" role="tablist" aria-label="Times of day" id="dayTabs"></div>
+    <div class="dcard" id="dayCard"></div>
+  </div>
+</section>
+
+<div class="marq o" aria-hidden="true"><div data-marq="Raspberry Pi 5|Arduino UNO R3|AD8232|MAX30100|TFT touchscreen"></div></div>
+
+<!-- COMPONENTS -->
+<section class="band b-blush" id="components">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">pick a part</span><h2 class="big">Components <em>used</em></h2>
+      <p class="lede">Ten parts make up the device. Tap one to see what it does.</p></div>
+    <div class="cgrid" id="cgrid"></div>
+    <div class="stk cdet" id="cdet" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- MYRA -->
+<section class="band b-teal" id="myra">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">say hello</span><h2 class="big">Meet <em>Myra</em></h2></div>
+    <div class="tabs" role="tablist" aria-label="About Myra" id="myTabs"></div>
+    <div class="myra-wrap">
+      <div class="myra-fig" id="myFig"><div class="bubble" id="myBubble">Hey Myra!</div><div id="myFace" style="width:100%;display:grid;place-items:center"></div></div>
+      <div class="mp stk" style="padding:26px" id="myPanel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="band b-cream" id="features">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">what it does</span><h2 class="big">Features you can <em>try</em></h2></div>
+
+    <article class="feat rv">
+      <div class="fx">
+        <span class="tag" style="color:var(--hotText)">Reminders</span>
+        <h3>Smart medicine reminders</h3>
+        <p>Caretakers add each medicine with its dose and times. When a dose is due, MediCare AI makes sure the patient notices (by voice, on screen, with lights and with sound) and records what happened.</p>
+        <ul class="fsteps">
+          <li><b>1</b><span><strong>Schedule.</strong> Medicines, doses and times are added from the admin panel.</span></li>
+          <li><b>2</b><span><strong>Alert.</strong> Myra speaks, the screen shows the dose, LEDs flash and the buzzer beeps 3 times.</span></li>
+          <li><b>3</b><span><strong>Record.</strong> The answer or a missed dose is saved with the time in A.M./P.M. format.</span></li>
+        </ul>
+        <div class="chips"><span class="chip">Alerts: Voice &middot; screen &middot; beep</span><span class="chip">Patients: Up to 3</span><span class="chip">Offline: Yes</span></div>
+      </div>
+      <div class="stk demo fx">
+        <h4>Reminder preview</h4>
+        <div class="rem"><div class="top"><b>8:00 A.M.</b><span>Time for your BP tablet.<br>1 dose, after breakfast.</span></div>
+          <div class="leds" style="justify-content:center"><i class="r on" style="animation:blinkled 1s infinite"></i><i class="y on" style="animation:blinkled 1s .3s infinite"></i><i class="g on" style="animation:blinkled 1s .6s infinite"></i></div>
+          <div class="buzz" style="text-align:center">Beep &middot; Beep &middot; Beep</div></div>
+      </div>
+    </article>
+
+    <article class="feat flip rv">
+      <div class="fx">
+        <span class="tag" style="color:var(--hotText)">Answer a reminder</span>
+        <h3>Taken &middot; Snooze &middot; Skip</h3>
+        <p>When a reminder comes, the patient answers in the easiest way for them, by touching a big button or simply by saying the word. Each answer does something different and is saved in the history.</p>
+        <ul class="fsteps">
+          <li><b>1</b><span><strong>Taken.</strong> Marks the dose as taken now. Family sees it in the app.</span></li>
+          <li><b>2</b><span><strong>Snooze.</strong> Reminds again after 10 minutes (the caretaker can change this).</span></li>
+          <li><b>3</b><span><strong>Skip.</strong> Records that the dose was skipped, so the doctor knows.</span></li>
+        </ul>
+        <div class="chips"><span class="chip">Answer by: Voice or touch</span><span class="chip">Snooze: 10 min default</span><span class="chip">Saved: Every answer</span></div>
+      </div>
+      <div class="stk demo fx">
+        <h4>Try it: press a button</h4>
+        <div class="rem">
+          <div class="top"><b>8:00 A.M.</b><span>BP tablet, 1 dose</span></div>
+          <div class="three"><button class="tk" data-ans="taken">Taken</button><button class="sn" data-ans="snooze">Snooze</button><button class="sk" data-ans="skip">Skip</button></div>
+          <div class="log" id="ansLog" aria-live="polite"><b>History</b>Nothing answered yet. Press a button above.</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feat rv">
+      <div class="fx">
+        <span class="tag" style="color:var(--hotText)">Health monitor</span>
+        <h3>Live ECG</h3>
+        <p>From the Monitor button on the touchscreen, the patient can see their heart's electrical activity as a moving graph, like the ECG screens in hospitals, using the AD8232 sensor and three electrodes.</p>
+        <ul class="fsteps">
+          <li><b>1</b><span><strong>Attach electrodes.</strong> Three pads on right arm, left arm and right leg (RA, LA, RL).</span></li>
+          <li><b>2</b><span><strong>Live graph.</strong> Arduino #2 sends 250 readings per second; the screen draws the waveform.</span></li>
+          <li><b>3</b><span><strong>Heart rate.</strong> Peaks in the wave are counted to find beats per minute, then saved.</span></li>
+        </ul>
+        <div class="chips"><span class="chip">Sampling: 250 per second</span><span class="chip">Sensor: AD8232</span><span class="chip">Saved to: Patient profile</span></div>
+      </div>
+      <div class="stk demo fx">
+        <h4>ECG illustration</h4>
+        <div class="ecgbox grid-bg"><svg id="featEcg" height="80"></svg></div>
+        <div class="bpm"><span class="muted" style="font-size:12px">Example waveform, not a real reading</span><b>72 <small style="font:700 14px var(--body)">bpm</small></b></div>
+      </div>
+    </article>
+
+    <article class="feat flip rv">
+      <div class="fx">
+        <span class="tag" style="color:var(--hotText)">Pulse screen</span>
+        <h3>Heart rate &amp; SpO&#8322; check</h3>
+        <p>The Pulse screen is a quick, simple health check. The patient places a fingertip on the MAX30100 sensor and holds still for 10 seconds while a countdown runs on the screen.</p>
+        <ul class="fsteps">
+          <li><b>1</b><span><strong>Place finger.</strong> Tap Monitor &rarr; Pulse and rest a fingertip on the sensor.</span></li>
+          <li><b>2</b><span><strong>10-second check.</strong> A countdown runs while the reading is taken.</span></li>
+          <li><b>3</b><span><strong>Result &amp; history.</strong> Heart rate and SpO&#8322; appear in big numbers and are saved for the logged-in patient.</span></li>
+        </ul>
+        <div class="chips"><span class="chip">Time: 10 seconds</span><span class="chip">Normal HR: 60&ndash;100 bpm</span><span class="chip">Normal SpO&#8322;: 95&ndash;100 %</span></div>
+      </div>
+      <div class="stk demo fx">
+        <h4>Try the countdown</h4>
+        <div class="ring"><svg viewBox="0 0 150 150"><circle class="bg" cx="75" cy="75" r="65"/><circle class="fg" id="ringFg" cx="75" cy="75" r="65"/></svg><div class="v" id="ringV">10</div></div>
+        <div style="text-align:center;margin-top:14px"><button class="btn pink" id="pulseBtn">Start 10-second check</button></div>
+        <div class="read" id="pulseOut" hidden><div><b>72</b><span>Heart rate (bpm)</span></div><div><b>98%</b><span>SpO&#8322;</span></div></div>
+        <p class="muted" style="font-size:12px;text-align:center;margin-top:10px" id="pulseNote">Example numbers for this demo only.</p>
+      </div>
+    </article>
+
+    <article class="feat rv">
+      <div class="fx">
+        <span class="tag" style="color:var(--hotText)">The screen</span>
+        <h3>Elder-friendly touchscreen</h3>
+        <p>The touchscreen was designed for elders: large text, bright colours and only a few big buttons on the home screen. Every screen has a clear Back button, and nothing needs typing.</p>
+        <ul class="fsteps">
+          <li><b>1</b><span><strong>Home screen.</strong> Clock with A.M./P.M., date, weather, temperature and air quality.</span></li>
+          <li><b>2</b><span><strong>Big buttons.</strong> Ask MYRA, Monitor, Reminders and Setup, each in its own colour.</span></li>
+          <li><b>3</b><span><strong>Patient PIN.</strong> Each patient logs in with a PIN to see their own data.</span></li>
+        </ul>
+        <div class="chips"><span class="chip">Weather: Open-Meteo</span><span class="chip">Time: 12-hour A.M./P.M.</span><span class="chip">Self-heal: Auto redraw</span></div>
+      </div>
+      <div class="fx" style="display:grid;place-items:center">
+        <div class="dev"><div class="scr">
+          <div class="tt"><b>10:42 A.M.</b><span>Tue, 10 Nov</span></div>
+          <div class="wx">28&deg;C &middot; Air quality: Moderate</div>
+          <div class="grid"><span style="background:#35E8C4">Ask MYRA</span><span style="background:#FF5CAA">Monitor</span><span style="background:#FF8A2B">Reminders</span><span style="background:#FFD84D">Setup</span></div></div>
+        </div>
+        <span class="cap">Illustration of the elder-friendly home screen</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- APPS -->
+<section class="band b-orange" id="apps">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">on your phone</span><h2 class="big">Two <em>apps</em>, one device</h2></div>
+    <div class="grid g2">
+      <div class="stk app rv">
+        <div class="tx"><span class="tag" style="color:var(--hotText)">For every patient</span><h3>MediCare app</h3>
+          <p style="font-size:14.5px">Every patient gets their own login to the MediCare web app. It works on any phone, tablet or laptop and can be added to the home screen like a normal app, with no download from a store needed.</p>
+          <ul class="fsteps">
+            <li><b>1</b><span><strong>Log in.</strong> Username and password. Forgot it? Contact help@pvproyals.in.</span></li>
+            <li><b>2</b><span><strong>My medicines.</strong> Today's doses, upcoming times and full dose history.</span></li>
+            <li><b>3</b><span><strong>My health.</strong> Saved ECG graphs, heart rate and SpO&#8322; readings.</span></li>
+          </ul>
+          <div class="chips"><span class="chip">medicare-ai.pvproyals.in</span><span class="chip">Phone &middot; laptop</span><span class="chip">HTTPS</span></div>
+          <p style="margin-top:16px"><a class="btn mint" href="https://medicare-ai.pvproyals.in" target="_blank" rel="noopener">Open the app &rarr;</a></p></div>
+        <div class="phone" aria-hidden="true"><div class="s"><b>My medicines</b>
+          <div class="row"><span>8:00 A.M. BP tablet</span><span class="ok">Taken</span></div>
+          <div class="row"><span>1:00 P.M. Vitamin D</span><span class="ok">Taken</span></div>
+          <div class="row"><span>8:00 P.M. Sugar tablet</span><span class="no">Due</span></div>
+          <b style="margin-top:4px">My health</b><div class="row"><span>Heart rate</span><span>72 bpm</span></div><div class="row"><span>SpO&#8322;</span><span>98%</span></div></div></div>
+      </div>
+      <div class="stk app rv">
+        <div class="tx"><span class="tag" style="color:var(--hotText)">For caretakers</span><h3>Admin panel</h3>
+          <p style="font-size:14.5px">The caretaker or family member uses the admin panel to set everything up. It opens from the ADMIN PANEL button at the top-right of the MediCare portal and has its own admin password.</p>
+          <ul class="fsteps">
+            <li><b>1</b><span><strong>Patients.</strong> Add up to 3 patients, set PINs, languages and app logins.</span></li>
+            <li><b>2</b><span><strong>Medicines.</strong> Add medicines, doses and reminder times for each patient.</span></li>
+            <li><b>3</b><span><strong>Reports.</strong> See dose history, missed doses and health readings.</span></li>
+          </ul>
+          <div class="chips"><span class="chip">Address: /admin</span><span class="chip">Login: Admin password</span><span class="chip">Idle: Auto log-out</span></div></div>
+        <div class="phone" aria-hidden="true"><div class="s"><b>Admin</b>
+          <div class="row"><span>Patients</span><span>3 / 3</span></div>
+          <div class="row"><span>Medicines</span><span>7</span></div>
+          <div class="row"><span>Missed today</span><span class="no">1</span></div>
+          <b style="margin-top:4px">Add medicine</b><div class="row"><span>Name, dose, times</span><span class="ok">+</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="band b-sky safe" id="safety">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">trust</span><h2 class="big">Safety, privacy &amp; <em>offline</em></h2></div>
+    <div class="grid g3" id="safeGrid"></div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section class="band b-cream" id="tech">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">the stack</span><h2 class="big">Software &amp; <em>technologies</em></h2></div>
+    <div class="layers" id="layers"></div>
+  </div>
+</section>
+
+<!-- CIRCUIT -->
+<section class="band b-blush" id="circuit">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">wire it up</span><h2 class="big">Circuit <em>diagram</em></h2>
+      <p class="lede">Arduino #1 and #2 connect to the Raspberry Pi 5 by USB. The speaker connects by Bluetooth.</p></div>
+    <div class="stk tblwrap rv" style="margin-bottom:26px">
+      <table><thead><tr><th>Part</th><th>Pin</th><th>Arduino #2</th></tr></thead><tbody id="pinBody"></tbody></table>
+    </div>
+    <div class="stk scrollx rv" style="padding:16px">
+      <svg class="circ" viewBox="0 0 800 500" id="circSvg" role="img" aria-label="MediCare AI circuit diagram showing wiring from Arduino number 2 to the AD8232, MAX30100, LEDs and buzzer"></svg>
+    </div>
+    <p class="muted" style="margin-top:14px;font-size:14px">Both Arduinos connect to the Raspberry Pi 5 by USB (data + power). AD8232 and MAX30100 share the 3.3 V rail; all GNDs are common.</p>
+  </div>
+</section>
+
+<!-- CODE -->
+<section class="band b-teal" id="code">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">open for everyone</span><h2 class="big">Source <em>code</em></h2>
+      <p class="lede" style="font-weight:700">Open the complete project on GitHub.</p></div>
+    <div class="nums">
+      <div class="stk rv"><b><span class="count" data-to="8100" data-plus="1">8,100+</span></b><span>lines of code</span></div>
+      <div class="stk rv"><b><span class="count" data-to="145">145</span></b><span>automated tests, all passing</span></div>
+      <div class="stk rv"><b><span class="count" data-to="53">53</span></b><span>Python modules</span></div>
+      <div class="stk rv"><b><span class="count" data-to="2">2</span></b><span>Arduino programs</span></div>
+    </div>
+    <p style="margin-top:34px"><a class="git" href="https://github.com/rexogamermc/medicare-ai" target="_blank" rel="noopener">github.com/rexogamermc/medicare-ai</a></p>
+  </div>
+</section>
+
+<!-- NEXT -->
+<section class="band b-cream" id="next">
+  <div class="wrap">
+    <div class="head rv"><span class="kick">coming soon</span><h2 class="big">What's <em>next?</em></h2></div>
+    <div class="grid g3" id="nextGrid"></div>
+  </div>
+</section>
+
+<!-- THANKS -->
+<section class="band b-hot thanks" id="thanks">
+  <div class="wrap">
+    <span class="kick">caring for patients, one reminder at a time</span>
+    <h2>Thank<br>you!</h2>
+    <div class="row">
+      <span class="chip" style="font-size:15px">Team TechTouch</span><span class="chip" style="font-size:15px">Bal Vigyan 2026</span><span class="chip" style="font-size:15px;background:var(--butter);color:var(--ink)">Questions?</span>
+    </div>
+    <div class="row">
+      <a class="btn mint" href="https://medicare-ai.pvproyals.in" target="_blank" rel="noopener">Try the MediCare app &rarr;</a>
+      <span class="mailbox">help@pvproyals.in <button type="button" id="copyMail">Copy</button></span>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="wrap"><span>MediCare AI &middot; Team TechTouch &middot; Bal Vigyan 2026</span><span>medicare-ai.pvproyals.in</span></div></footer>
+
+<style>@keyframes blinkled{0%,100%{opacity:1}50%{opacity:.25}}</style>
+
+<script>
+(function(){
+var $=function(s,r){return(r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var RM=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- SVG characters ---------- */
+function myraSVG(){return '<svg viewBox="0 0 120 124" aria-hidden="true"><circle class="o" cx="60" cy="62" r="54" fill="#8F6BFF"/><rect class="o" x="3" y="54" width="14" height="26" rx="7" fill="#FFD84D"/><rect class="o" x="103" y="54" width="14" height="26" rx="7" fill="#FFD84D"/><path class="o" d="M10 56 A50 50 0 0 1 110 56" fill="none"/><circle cx="60" cy="66" r="38" fill="#FFF5E0"/><g class="eyes"><ellipse cx="46" cy="60" rx="5.5" ry="8" fill="#17120F"/><ellipse cx="74" cy="60" rx="5.5" ry="8" fill="#17120F"/><circle cx="48" cy="56" r="2" fill="#fff"/><circle cx="76" cy="56" r="2" fill="#fff"/></g><circle cx="35" cy="76" r="6" fill="#FF8FBF" opacity=".8"/><circle cx="85" cy="76" r="6" fill="#FF8FBF" opacity=".8"/><path class="mouth" d="M46 80 Q60 96 74 80 Z" fill="#B80F66" stroke="#17120F" stroke-width="3" stroke-linejoin="round"/><path class="o" d="M16 82 Q22 106 50 110" fill="none"/><circle class="o" cx="52" cy="110" r="5" fill="#FF5CAA"/></svg>'}
+function elderSVG(){return '<svg viewBox="0 0 100 120" aria-hidden="true"><path class="o" d="M10 120 C10 82 28 74 50 74 C72 74 90 82 90 120Z" fill="#FF8A2B"/><circle class="o" cx="50" cy="46" r="26" fill="#F2C19B"/><path class="o" d="M24 42 C22 14 78 14 76 42 C70 28 30 28 24 42Z" fill="#E8E8E8"/><circle class="o" cx="40" cy="48" r="8" fill="#fff" fill-opacity=".5"/><circle class="o" cx="60" cy="48" r="8" fill="#fff" fill-opacity=".5"/><path class="o" d="M48 48h4" fill="none"/><path class="o" d="M40 62 Q50 70 60 62" fill="none"/></svg>'}
+function docSVG(){return '<svg viewBox="0 0 100 120" aria-hidden="true"><path class="o" d="M8 120 C8 82 26 74 50 74 C74 74 92 82 92 120Z" fill="#FFFFFF"/><path class="o" d="M38 76 L50 96 L62 76" fill="#35E8C4"/><circle class="o" cx="50" cy="46" r="26" fill="#E2A97E"/><path class="o" d="M24 44 C22 14 78 14 76 44 C70 30 30 30 24 44Z" fill="#17120F"/><circle cx="41" cy="48" r="3" fill="#17120F"/><circle cx="59" cy="48" r="3" fill="#17120F"/><path class="o" d="M41 60 Q50 68 59 60" fill="none"/><path class="o" d="M30 84 Q26 106 44 108" fill="none"/><circle class="o" cx="46" cy="108" r="5" fill="#FF5CAA"/></svg>'}
+$('#heroMyra').innerHTML=myraSVG();$('#heroMyra').classList.add('talk');
+$('#heroElder').innerHTML=elderSVG();$('#heroDoc').innerHTML=docSVG();
+
+/* ---------- bursts ---------- */
+$$('svg[data-burst]').forEach(function(s){var n=+s.dataset.burst,p=[];for(var i=0;i<n*2;i++){var a=Math.PI*i/n,r=i%2?38:49;p.push((Math.cos(a)*r).toFixed(1)+','+(Math.sin(a)*r).toFixed(1))}s.innerHTML='<polygon points="'+p.join(' ')+'"/>'});
+
+/* ---------- ECG ---------- */
+function ecg(el){var d='M0 45',i;for(i=0;i<16;i++)d+=' h60 l8 -6 l8 6 h20 l6 4 l8 -38 l8 46 l6 -12 h14 l10 -10 l10 10 h46';el.setAttribute('width',204*16);el.innerHTML='<path d="'+d+'"/>'}
+ecg($('#heroEcg'));ecg($('#featEcg'));
+
+/* ---------- marquee ---------- */
+$$('[data-marq]').forEach(function(m){var t=m.dataset.marq.split('|'),h='';for(var k=0;k<4;k++)t.forEach(function(x){h+='<span><b></b>'+x+'</span>'});m.innerHTML=h});
+
+/* ---------- icons ---------- */
+function bubble(k){var O='class="o" ';
+var I={
+pi:'<rect '+O+'x="8" y="14" width="104" height="62" rx="8" fill="#2FA15E"/><rect '+O+'x="40" y="28" width="26" height="24" rx="3" fill="#C9C9C9"/><rect '+O+'x="78" y="22" width="26" height="16" rx="2" fill="#E5E5E5"/><rect '+O+'x="78" y="44" width="26" height="16" rx="2" fill="#E5E5E5"/><rect '+O+'x="14" y="20" width="14" height="48" rx="2" fill="#17120F"/><circle cx="24" cy="70" r="2" fill="#fff"/>',
+ard:'<rect '+O+'x="8" y="12" width="104" height="66" rx="8" fill="#1FB5B5"/><rect '+O+'x="18" y="6" width="84" height="8" rx="2" fill="#17120F"/><rect '+O+'x="18" y="76" width="84" height="8" rx="2" fill="#17120F"/><path '+O+'d="M42 45c0-10 14-10 18 0s18 10 18 0-14-10-18 0-18 10-18 0z" fill="none" stroke="#fff"/><rect '+O+'x="8" y="30" width="16" height="22" rx="3" fill="#BDBDBD"/>',
+tft:'<rect '+O+'x="8" y="8" width="104" height="74" rx="8" fill="#1d1d1d"/><rect x="16" y="15" width="88" height="48" rx="4" fill="#BEE3E8"/><rect x="20" y="36" width="38" height="12" rx="3" fill="#35E8C4"/><rect x="62" y="36" width="38" height="12" rx="3" fill="#FF5CAA"/><rect x="20" y="51" width="38" height="9" rx="3" fill="#FF8A2B"/><rect x="62" y="51" width="38" height="9" rx="3" fill="#FFD84D"/><rect x="22" y="19" width="30" height="10" rx="2" fill="#17120F"/><rect '+O+'x="40" y="70" width="40" height="8" rx="2" fill="#555"/>',
+ecg:'<rect '+O+'x="10" y="10" width="58" height="42" rx="5" fill="#E24C4C"/><path d="M16 32h10l4-10 6 20 4-10h14" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path '+O+'d="M68 24 C86 24 90 40 100 50" fill="none"/><path '+O+'d="M68 32 C90 34 96 56 94 70" fill="none"/><path '+O+'d="M68 40 C80 52 70 68 74 78" fill="none"/><circle '+O+'cx="101" cy="52" r="6" fill="#FFD84D"/><circle '+O+'cx="94" cy="72" r="6" fill="#FFD84D"/><circle '+O+'cx="74" cy="80" r="6" fill="#FFD84D"/>',
+max:'<rect '+O+'x="12" y="22" width="58" height="46" rx="5" fill="#2D5BD8"/><circle '+O+'cx="30" cy="45" r="8" fill="#FF3B3B"/><circle '+O+'cx="52" cy="45" r="8" fill="#FFB3B3"/><rect '+O+'x="18" y="68" width="46" height="8" rx="2" fill="#17120F"/><path '+O+'d="M64 30 C84 20 108 26 108 46 C108 66 84 70 64 62 Z" fill="#F2C19B"/><path d="M84 36 q6 8 0 16" fill="none" stroke="#FF3B3B" stroke-width="3" stroke-linecap="round"/>',
+led:'<rect '+O+'x="8" y="20" width="104" height="50" rx="10" fill="#fff"/><circle '+O+'cx="30" cy="45" r="13" fill="#FF4040"/><circle '+O+'cx="60" cy="45" r="13" fill="#FFD84D"/><circle '+O+'cx="90" cy="45" r="13" fill="#35E86A"/>',
+buz:'<circle '+O+'cx="52" cy="46" r="34" fill="#2b2b2b"/><circle '+O+'cx="52" cy="46" r="10" fill="#555"/><path d="M40 20h10M45 15v10" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path '+O+'d="M94 32 Q104 46 94 60 M104 24 Q120 46 104 68" fill="none"/>',
+spk:'<rect '+O+'x="24" y="8" width="72" height="74" rx="22" fill="#3a3a52"/><circle '+O+'cx="60" cy="52" r="18" fill="#17120F"/><circle cx="60" cy="52" r="8" fill="#6a6a8a"/><circle '+O+'cx="60" cy="24" r="5" fill="#35E8C4"/><path d="M104 28 l8 8 -8 8 M104 44 l8-8 -8-8" fill="none" stroke="#2D5BD8" stroke-width="3" stroke-linecap="round"/>',
+bb:'<rect '+O+'x="8" y="12" width="104" height="66" rx="6" fill="#F5F0E1"/><rect x="14" y="18" width="92" height="5" fill="#FF4040"/><rect x="14" y="26" width="92" height="5" fill="#2D5BD8"/><g fill="#555"><rect x="18" y="40" width="6" height="6"/><rect x="30" y="40" width="6" height="6"/><rect x="42" y="40" width="6" height="6"/><rect x="54" y="40" width="6" height="6"/><rect x="66" y="40" width="6" height="6"/><rect x="78" y="40" width="6" height="6"/><rect x="90" y="40" width="6" height="6"/><rect x="18" y="52" width="6" height="6"/><rect x="30" y="52" width="6" height="6"/><rect x="42" y="52" width="6" height="6"/><rect x="54" y="52" width="6" height="6"/><rect x="66" y="52" width="6" height="6"/><rect x="78" y="52" width="6" height="6"/><rect x="90" y="52" width="6" height="6"/></g><path '+O+'d="M21 43 Q40 22 57 55" fill="none" stroke="#35E86A"/><path '+O+'d="M81 43 Q70 70 93 55" fill="none" stroke="#FFD84D"/>',
+usb:'<rect '+O+'x="8" y="34" width="46" height="24" rx="8" fill="#C9C9C9"/><rect '+O+'x="54" y="38" width="14" height="16" rx="3" fill="#17120F"/><path '+O+'d="M68 46 C90 46 90 20 112 24" fill="none"/><path d="M26 46h14" stroke="#17120F" stroke-width="3" stroke-linecap="round"/><path d="M92 12 L84 28 h12 l-8 16" fill="#FFD84D" stroke="#17120F" stroke-width="2.5" stroke-linejoin="round"/>'
+};
+return '<svg viewBox="0 0 120 90" aria-hidden="true">'+I[k]+'</svg>'}
+
+/* ---------- data ---------- */
+var SOL=[['M','Myra voice assistant','"Hey Myra" in English or हिन्दी','#8F6BFF'],['!','Medicine reminders','Voice, screen, LEDs and buzzer','#FFD84D'],['~','ECG monitor','Live heart graph with AD8232','#FF5CAA'],['bpm','Heart rate & SpO₂','10-second check, saved history','#35E8C4'],['App','MediCare app','Patient login from any phone','#FF8A2B'],['+','Admin panel','Caretaker manages patients','#BEE3E8'],['°C','Weather & AQI','Temperature and air quality','#FAC8DA'],['✓','Works offline','Reminders run without internet','#22A58B']];
+$('#bento').innerHTML=SOL.map(function(s){return '<div class="stk rv"><div class="ico" style="background:'+s[3]+'">'+s[0]+'</div><h3>'+s[1]+'</h3><p>'+s[2]+'</p></div>'}).join('');
+
+
+
+var WH=[['Homes','Elders living alone or with working family members.','#FFD84D'],['Old-age homes','One device for up to 3 residents, managed by a caretaker.','#FAC8DA'],['Clinics & hospitals','Follow-up care after discharge, with a health history.','#35E8C4'],['Rural health centres','Hindi voice and offline reminders for villages.','#FF8A2B'],['Chronic illness care','Daily medicines for diabetes, BP and heart patients.','#FF5CAA'],['Easy for everyone','Low vision or low literacy? Big colourful buttons and a voice you can talk to.','#BEE3E8']];
+$('#whereGrid').innerHTML=WH.map(function(w){return '<div class="stk rv"><span class="chip" style="background:'+w[2]+';color:#17120F">'+w[0].split(' ')[0]+'</span><h3>'+w[0]+'</h3><p style="font-size:15px">'+w[1]+'</p></div>'}).join('');
+
+var USE=[{"t": "Home", "h": "Elders living alone or with working children", "s": "This is the core problem it solves. Myra speaks each reminder at home, the screen shows it, and the LEDs and buzzer back it up. The patient answers Taken, Snooze or Skip by voice or touch, and the family sees the history in the MediCare app or gets the same notification on their phone. That gives peace of mind without a full-time caretaker.", "l": ["Reminds on time with voice, screen, buzzer and LEDs", "Patient answers Taken, Snooze or Skip by voice or touch", "Family checks dose history from the MediCare app", "Myra answers simple health questions any time of day"], "q": "My son is at office all day. Myra reminds me at 8 A.M. and I just say \u2018taken\u2019.", "w": ["Elders", "Family members", "Home nurses"]}, {"t": "Care homes", "h": "Old-age homes and care centres", "s": "One device can serve any number of residents. Each finds their name by scrolling, typing or saying it, and logs in with their own PIN. The caretaker manages everyone\u2019s medicines from the admin panel and can see who missed a dose, instead of keeping paper registers.", "l": ["Each resident logs in with their own private PIN", "Admin panel for the caretaker to add medicines and schedules", "Every dose is recorded automatically with the time", "ECG and pulse checks saved to each resident\u2019s profile"], "q": "One device in our room looks after all of us. The caretaker sees everything.", "w": ["Residents", "Caretakers", "Care-home managers"]}, {"t": "Long-term illness", "h": "Patients with long-term illnesses", "s": "Diabetes, blood pressure, heart and thyroid patients take medicines every day for years, often several times a day. These are the people the WHO \u201c50% don\u2019t take medicines as prescribed\u201d figure is about. Repeated reminders with a recorded history help them stay regular.", "l": ["Repeated reminders for medicines taken several times a day", "Every dose is recorded with its date and time", "Dose history shows how regular the patient has been", "Myra answers simple health questions any time of day"], "q": "I take my tablets four times a day. Now I do not have to remember, Myra does.", "w": ["Diabetes patients", "BP and heart patients", "Thyroid patients"]}, {"t": "After hospital", "h": "Follow-up after leaving hospital", "s": "After discharge, the doctor can\u2019t see whether medicines are being taken. MediCare AI keeps a dated dose history plus saved ECG checks that the patient or family can show at the next visit.", "l": ["Dose history shows how regularly medicines were taken", "Saved ECG, heart rate and SpO\u2082 readings in one place", "Secure online access through the MediCare web portal", "Simple to hand over: plug in, add the patient, done"], "q": "The doctor could see I took my tablets every day and my heart readings this week.", "w": ["Patients", "Doctors", "Clinics"]}, {"t": "Rural & Hindi", "h": "Rural areas and people more comfortable in Hindi", "s": "Myra speaks and understands Hindi, and the screen shows Hindi text. Reminders, the touchscreen, the LEDs and the buzzer work fully offline. The parts are cheap (Raspberry Pi, Arduino, simple sensors), and the big colourful buttons work for people who can\u2019t read well. ASHA workers could set it up for families.", "l": ["Speaks and understands Hindi as well as English", "Reminders, history and screen work fully offline", "Low-cost parts: Raspberry Pi, Arduino and simple sensors", "Large colourful buttons that need no reading skill"], "q": "<span lang=\"hi\">\u092e\u093e\u092f\u0930\u093e \u092e\u0941\u091d\u0938\u0947 \u0939\u093f\u0928\u094d\u0926\u0940 \u092e\u0947\u0902 \u092c\u093e\u0924 \u0915\u0930\u0924\u0940 \u0939\u0948\u0964</span>", "c": "Myra talks to me in Hindi.", "w": ["Villagers", "ASHA workers", "Health centres"]}, {"t": "Easy to use", "h": "People with weak eyesight, shaky hands or little experience with phones", "s": "They can talk to the device instead of typing. The buttons are large and the LED colours show status from across the room, so it suits people who struggle with smartphone apps.", "l": ["Talk to the device instead of typing", "Large buttons in bright colours", "LED colours show status from across the room", "No menus to learn, and nothing needs typing"], "q": "I cannot read small letters. I just talk to Myra and press the big button.", "w": ["Weak eyesight", "Shaky hands", "First-time phone users"]}, {"t": "Health awareness", "h": "Basic health awareness at home", "s": "Patients can ask Myra simple health questions any time and see their heart\u2019s electrical activity (ECG) on screen. This is for awareness and record-keeping, not diagnosis. It is not a certified medical device and does not replace a doctor.", "l": ["Ask Myra simple health questions any time", "See the heart\u2019s electrical activity (ECG) on screen", "Heart rate and SpO\u2082 readings saved as a record", "Myra advises seeing a doctor for anything serious"], "q": "I asked Myra if I can walk after lunch, and she answered in simple words.", "w": ["Patients", "Families", "Caretakers"]}];
+var ucT=$('#ucTabs'),ucP=$('#ucPanel');
+function ucShow(i){
+  $$('.tab',ucT).forEach(function(b,j){b.setAttribute('aria-selected',j===i?'true':'false');b.tabIndex=j===i?0:-1});
+  var u=USE[i];
+  ucP.innerHTML='<div class="uc"><div class="stk card" style="padding:28px"><span class="tag" style="color:var(--hotText)">Use case '+(i+1)+' of '+USE.length+'</span><h3>'+u.h+'</h3><span class="sub">The situation</span><p>'+u.s+'</p><span class="sub">How MediCare AI helps</span><ul>'+u.l.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div><div class="side"><div class="stk quote"><q>'+u.q+'</q><cite>'+(u.c||'A patient, in their words')+'</cite></div><div class="stk card"><span class="sub" style="margin:0 0 10px;display:block;font:900 11.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--hotText)">Who benefits</span><div class="who">'+u.w.map(function(x){return '<span class="chip" style="background:var(--mint);color:#17120F">'+x+'</span>'}).join('')+'</div></div></div></div>';
+}
+USE.forEach(function(u,i){var b=document.createElement('button');b.className='tab';b.type='button';b.setAttribute('role','tab');b.textContent=u.t;b.addEventListener('click',function(){ucShow(i)});ucT.appendChild(b)});
+ucShow(0);
+
+var FLOW=[['Sense','Microphone hears "Hey Myra", a touch is detected, a sensor sends data or a dose time arrives.','Patient asks: "Hey Myra, did I take my BP tablet?"'],['Understand','Raspberry Pi turns speech into text and works out what the patient wants.','Wake word heard. Speech is turned into text.'],['Decide','Reminder engine, health monitor or Gemini AI prepares the right answer.','Dose history is checked.'],['Respond','Myra speaks, the screen updates, LEDs change colour and the buzzer beeps.','Myra answers: "Yes, you took it at 8:05 A.M."'],['Record','Doses and readings are saved in the database and shown in the MediCare app.','The history is up to date in the MediCare app.']];
+var fl=$('#flow'),fi=0,ft=null;
+fl.innerHTML=FLOW.map(function(f,i){return '<button type="button" class="step" data-i="'+i+'"><div class="n">'+(i+1)+'</div><h3>'+f[0]+'</h3><p>'+f[1]+'</p></button>'}).join('');
+function flSet(i){fi=i;$$('.step',fl).forEach(function(s,j){s.classList.toggle('on',j===i)});$('#exline').textContent=FLOW[i][2]}
+function flAuto(){clearInterval(ft);if(RM)return;ft=setInterval(function(){flSet((fi+1)%5)},2600)}
+$$('.step',fl).forEach(function(s){s.addEventListener('click',function(){flSet(+s.dataset.i);flAuto()})});
+flSet(0);flAuto();
+
+/* architecture */
+(function(){
+var nd=function(x,y,w,h,t1,t2){return '<rect class="nd" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="16"/><text class="t1" x="'+(x+w/2)+'" y="'+(y+30)+'" text-anchor="middle">'+t1+'</text>'+t2.map(function(t,i){return '<text class="t2" x="'+(x+w/2)+'" y="'+(y+52+i*18)+'" text-anchor="middle">'+t+'</text>'}).join('')};
+var paths=[['M250 90 L345 205','USB serial',255,128],['M250 430 L345 315','USB serial',255,388],['M650 90 L555 205','Bluetooth',590,128],['M650 430 L555 315','HTTPS',592,388],['M450 470 L450 355','Tunnel',462,420],['M450 55 L450 180','Voice + touch',462,92]];
+var s='';
+paths.forEach(function(p,i){s+='<path id="ap'+i+'" class="ln" d="'+p[0]+'"/>'});
+paths.forEach(function(p,i){s+='<text class="lab" x="'+p[2]+'" y="'+p[3]+'">'+p[1]+'</text>'});
+if(!RM)paths.forEach(function(p,i){s+='<circle class="pulse" r="7"><animateMotion dur="'+(2.2+i*.3)+'s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"><mpath href="#ap'+i+'"/></animateMotion></circle>'});
+s+='<rect class="pi" x="320" y="180" width="260" height="160" rx="20"/><text class="t1 pi-t" x="450" y="212" text-anchor="middle" style="font-size:22px">Raspberry Pi 5</text><text class="t2 pi-t" x="450" y="232" text-anchor="middle" style="font-weight:700">the brain of the system</text>';
+['Myra voice assistant','Reminder engine','Health monitor service','SQLite database','Web server (Flask)'].forEach(function(t,i){s+='<text class="t2 pi-t" x="450" y="'+(258+i*17)+'" text-anchor="middle">'+t+'</text>'});
+s+=nd(40,40,210,100,'Arduino #1',['3.5″ touchscreen']);
+s+=nd(40,380,210,100,'Arduino #2',['AD8232 · MAX30100','LEDs · Buzzer']);
+s+=nd(650,40,210,100,'Bluetooth speaker',['with microphone']);
+s+=nd(650,380,210,100,'Internet',['Gemini AI','Open-Meteo weather']);
+s+=nd(350,470,200,46,'MediCare app',[]);
+s+='<text class="t2" x="450" y="40" text-anchor="middle" style="font-weight:700">Patient</text>';
+document.getElementById('archSvg').innerHTML=s;
+})();
+
+var DAY=[['7:00 A.M.','System ready','Indicator LED turns green; the screen shows time, weather and AQI.',[0,0,1],''],['8:00 A.M.','Medicine time','Myra speaks the reminder, buzzer beeps 3 times, screen shows the dose.',[0,1,0],'Buzzer: Beep · Beep · Beep'],['8:02 A.M.','"Taken!"','Patient answers by voice. The dose is saved with the time.',[0,0,1],'Dose saved'],['11:30 A.M.','Ask Myra','"Is it okay to walk after lunch?" Myra answers in simple words.',[0,1,0],'Myra is thinking'],['5:00 P.M.','Health check','ECG and pulse check on the Monitor screen, saved to the profile.',[0,0,1],'Reading saved'],['8:00 P.M.','Family looks in','Son opens the MediCare app and sees all doses were taken today.',[0,0,1],'All doses taken']];
+var dT=$('#dayTabs'),dC=$('#dayCard');
+function daySet(i){
+  $$('.dbtn',dT).forEach(function(b,j){b.setAttribute('aria-selected',j===i?'true':'false')});
+  var d=DAY[i];
+  dC.innerHTML='<div class="stk card" style="padding:28px"><div class="bigtime">'+d[0]+'</div><h3>'+d[1]+'</h3><p style="font-size:16px">'+d[2]+'</p></div><div class="stk state"><span class="tag muted">Device at this moment</span><div class="leds"><i class="r'+(d[3][0]?' on':'')+'"></i><i class="y'+(d[3][1]?' on':'')+'"></i><i class="g'+(d[3][2]?' on':'')+'"></i></div><div class="buzz">'+(d[4]||'Quiet')+'</div></div>';
+}
+DAY.forEach(function(d,i){var b=document.createElement('button');b.type='button';b.className='dbtn';b.setAttribute('role','tab');b.innerHTML='<b>'+d[0]+'</b><span>'+d[1]+'</span>';b.addEventListener('click',function(){daySet(i)});dT.appendChild(b)});
+daySet(0);
+
+var COMP=[
+{k:'pi',n:'Raspberry Pi 5',s:'Main computer',w:'The brain. Main computer.',d:'A small but powerful single-board computer with a quad-core Arm processor, Wi-Fi and Bluetooth. It runs Raspberry Pi OS and all of our Python programs, and starts MediCare AI automatically when it is switched on.',j:['Runs Myra, the reminder engine and the health monitor','Stores patients, medicines and readings in a SQLite database','Hosts the MediCare web app and admin panel','Talks to both Arduinos over USB and the speaker over Bluetooth'],sp:[['Processor','4-core Cortex-A76'],['Connects','Wi-Fi · BT · USB'],['Software','Python 3.13']]},
+{k:'ard',n:'Arduino UNO R3 ×2',s:'Display + sensor boards',w:'Two helper boards. Microcontroller ×2.',d:'A simple microcontroller board that is very good at real-time jobs like drawing on a screen and reading sensors many times a second. We use two of them, each connected to the Raspberry Pi with a USB cable.',j:['Arduino #1 drives the touchscreen and reads every touch','Arduino #2 reads the ECG and pulse sensors','Arduino #2 controls the indicator LEDs and buzzer','Messages carry a checksum so nothing gets corrupted'],sp:[['Chip','ATmega328P'],['Speed','16 MHz'],['Link','USB serial'],['#1','display'],['#2','sensors']]},
+{k:'tft',n:'3.5″ TFT touchscreen',s:'ILI9488, 480×320',w:'Display + touch.',d:'A colour display shield with a resistive touch layer that plugs straight on top of Arduino #1, with no extra wires. The Raspberry Pi tells the Arduino what to draw, and the Arduino reports where the screen was touched.',j:['Shows time, date, weather and air quality','Big colourful buttons: Ask MYRA, Monitor, Reminders, Setup','Shows Hindi text drawn by the Pi as small images','PIN login for each of the 3 patients'],sp:[['Size','3.5 inch'],['Resolution','480 × 320'],['Driver','ILI9488']],c:'Illustration of the elder-friendly home screen'},
+{k:'ecg',n:'AD8232 ECG sensor',s:'With 3 electrodes',w:'Heart electrical signal.',d:'A small module that measures the tiny electrical signals made by the heart through three stick-on electrodes. It cleans and amplifies the signal so that the Arduino can read it as a heartbeat waveform.',j:['Gives the live ECG graph on the Monitor screen','Heart rate is calculated from the time between beats','LO+ and LO− pins tell us if an electrode comes off','Readings are saved to the patient’s history'],sp:[['Output','OUT → A0'],['Lead-off','D10 / D11'],['Power','3.3 V']],c:'Three electrodes: right arm, left arm, right leg'},
+{k:'max',n:'MAX30100',s:'Pulse oximeter, I²C',w:'Heart rate + SpO₂.',d:'A pulse oximeter and heart-rate sensor. A red LED and an infrared LED shine into the fingertip and a light sensor measures how much light comes back. Blood absorbs the two colours differently, which shows the pulse and the oxygen level (SpO₂).',j:['Connects to Arduino #2 on the I²C bus','Designed for the 10-second pulse check on the touchscreen','Heart rate and SpO₂ are shown in large numbers','Results are saved to the patient’s health history'],sp:[['SDA','A4'],['SCL','A5'],['Power','3.3 V'],['Measures','Pulse · SpO₂']],c:'Place a fingertip on the sensor window'},
+{k:'led',n:'Indicator LEDs',s:'Red · yellow · green',w:'System status at a glance.',d:'A small module with a red, a yellow and a green LED. Even someone who cannot read the screen can understand the system state from across the room just by looking at the colour.',j:['Red: starting up, or something needs attention','Yellow: Myra is listening or thinking','Green: everything is working normally','Flashes together with the buzzer for medicine reminders'],sp:[['Red','D5'],['Yellow','D6'],['Green','D7']]},
+{k:'buz',n:'Buzzer',s:'Sound alerts',w:'Audible alarm.',d:'A small buzzer that can play beeps of any length and pitch. It makes sure a reminder is noticed even when the Bluetooth speaker is switched off or the patient is in another room.',j:['Long beep when the system has started','Three beeps when a medicine reminder is due','Pitch and length are set by the Raspberry Pi','Works even if the speaker is not connected'],sp:[['Signal','D8'],['Ground','GND'],['Control','Pi command (via Arduino #2)']]},
+{k:'spk',n:'Bluetooth speaker',s:'With microphone',w:'Myra’s ears and voice.',d:'A portable Bluetooth speaker with a built-in microphone. It connects to the Raspberry Pi wirelessly, so it can be kept close to the patient’s bed or chair while the main device stays on the table.',j:['Microphone listens for "Hey Myra" and questions','Speaker plays Myra’s replies in English or Hindi','Reads out every medicine reminder','Managed by PipeWire audio on the Raspberry Pi'],sp:[['Link','Bluetooth'],['Input','Microphone'],['Output','Speaker']]},
+{k:'bb',n:'Breadboard & jumpers',s:'Power rails + wiring',w:'Connecting everything.',d:'A solderless breadboard and jumper wires connect the sensors, LEDs and buzzer to Arduino #2. Nothing is soldered, so parts can be changed quickly. A USB-C supply powers the Raspberry Pi, which powers both Arduinos through USB.',j:['3.3 V rail powers the AD8232 and MAX30100','Common ground for all modules','Colour-coded jumper wires make checking easy','One power cable for the whole system'],sp:[['Rails','3.3 V · GND'],['Wires','Jumper wires'],['Power','USB-C']]},
+{k:'usb',n:'USB-C power supply',s:'+ USB cables',w:'One cable powers it all.',d:'A 27 W USB-C supply powers the Raspberry Pi. The Pi then powers both Arduinos through their USB cables, which also carry the data.',j:['One power cable for the whole system','USB cables carry both data and power to each Arduino','The Bluetooth speaker has its own battery'],sp:[['Supply','27 W USB-C'],['Cables','USB data + power']]}];
+var cg=$('#cgrid'),cd=$('#cdet');
+function compSet(i){
+  $$('.cbtn',cg).forEach(function(b,j){b.setAttribute('aria-pressed',j===i?'true':'false')});
+  var c=COMP[i];
+  cd.innerHTML='<div><div class="pic">'+bubble(c.k)+'</div>'+(c.c?'<span class="cap">'+c.c+'</span>':'')+'</div><div><h3>'+c.n+'</h3><span class="what">'+c.w+'</span><p style="font-size:15px">'+c.d+'</p><span class="tag" style="margin:16px 0 4px;color:var(--hotText)">Its job</span><ul>'+c.j.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><div class="specs">'+c.sp.map(function(x){return '<span><b>'+x[0]+':</b> '+x[1]+'</span>'}).join('')+'</div></div>';
+}
+COMP.forEach(function(c,i){var b=document.createElement('button');b.type='button';b.className='cbtn';b.setAttribute('aria-pressed','false');b.innerHTML=bubble(c.k)+'<b>'+c.n+'</b><span>'+c.s+'</span>';b.addEventListener('click',function(){compSet(i)});cg.appendChild(b)});
+compSet(0);
+
+/* Myra */
+var MY=[
+{t:'Myra',h:'Myra, the voice assistant',p:'Myra is the friendly voice of MediCare AI. Patients simply talk to her, with no typing and no menus. She answers health questions, reads reminders, tells the time and weather, and records doses when the patient replies.',s:[['Listens','Waits for "Hey Myra", then records the question until the patient stops speaking.'],['Thinks','Speech is turned into text and answered by the AI, the reminder system or the clock.'],['Speaks','The reply is spoken in a natural voice and shown on the touchscreen.']],c:['Voice: Piper speech','Languages: English · हिन्दी','Stop: Button on screen'],b:'Hey Myra!'},
+{t:'Wake word',h:'"Hey Myra" wake word',p:'Myra only wakes up when she hears her name, so she does not react to TV or normal talk. The wake word is detected completely offline on the Raspberry Pi, so no audio leaves the device while she is waiting.',s:[['Always listening','A small offline speech model (Vosk) checks the audio for "Hey Myra".'],['Strict check','Similar-sounding words are rejected and each word must be heard clearly.'],['Smart follow-up','Myra listens again only when she has asked the patient a question.']],c:['Engine: Vosk (offline)','Privacy: Audio stays local','False wakes: Filtered out'],b:'Listening…'},
+{t:'Gemini AI',h:'Gemini AI, Myra’s brain',p:'For general health questions Myra uses Google Gemini, a large AI model. We give it clear instructions to answer in short, simple and careful words, and to advise seeing a doctor for anything serious.',s:[['Question','The patient’s question is sent as text, with no name or personal details.'],['Safe answer','Gemini answers briefly and calmly, with a doctor reminder for serious issues.'],['Backup','If the internet or AI is down, Myra says so politely and reminders keep working.']],c:['Model: Gemini 3.5 Flash','Plan: Free tier API','API key: Stored securely'],b:'Thinking…'},
+{t:'English + हिन्दी',h:'English + <span lang="hi">हिन्दी</span>',p:'India speaks many languages, and many elders are most comfortable in Hindi. MediCare AI works in both English and Hindi, for listening, speaking and on the touchscreen.',s:[['Choose language','Each patient picks English or Hindi in their settings.'],['Understands','Separate English and Hindi speech models understand the patient.'],['Speaks & shows','A Hindi voice speaks, and Hindi letters are drawn on the screen.']],c:['Voices: Amy · Priyamvada','Screen: Hindi rendering','Per patient: Own language'],b:'नमस्ते!',lang:1}];
+var myT=$('#myTabs'),myP=$('#myPanel');
+$('#myFace').innerHTML=myraSVG();$('#myFace').classList.add('talk');
+function mySet(i){
+  $$('.tab',myT).forEach(function(b,j){b.setAttribute('aria-selected',j===i?'true':'false')});
+  var m=MY[i];
+  $('#myBubble').innerHTML=m.lang?'<span lang="hi">'+m.b+'</span>':m.b;
+  var h='<h3>'+m.h+'</h3><p>'+m.p+'</p>';
+  if(m.lang)h+='<div class="lang" style="margin-top:18px" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">English</button><button type="button" data-l="hi" aria-pressed="false" lang="hi">हिन्दी</button></div><div class="stk aa"><div class="big2">Aa <span lang="hi">अ</span></div><div><div class="say" id="saySamp">Hello! Time for your tablet.</div><div class="muted" style="font-size:12px" id="sayNote">Myra speaks with the voice Amy.</div></div></div>';
+  h+='<ul class="steps">'+m.s.map(function(x,k){return '<li><i>'+(k+1)+'</i><div><b>'+x[0]+'</b><span>'+x[1]+'</span></div></li>'}).join('')+'</ul><div class="chips">'+m.c.map(function(x){return '<span class="chip">'+x+'</span>'}).join('')+'</div>';
+  myP.innerHTML=h;
+  $$('.lang button',myP).forEach(function(b){b.addEventListener('click',function(){
+    var hi=b.dataset.l==='hi';
+    $$('.lang button',myP).forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+    var s=$('#saySamp');s.innerHTML=hi?'<span lang="hi">नमस्ते! आपकी दवा का समय हो गया है।</span>':'Hello! Time for your tablet.';
+    $('#sayNote').textContent=hi?'Myra speaks with the voice Priyamvada.':'Myra speaks with the voice Amy.';
+    $('#myBubble').innerHTML=hi?'<span lang="hi">नमस्ते!</span>':'Hello!';
+  })});
+}
+MY.forEach(function(m,i){var b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.innerHTML=m.t;b.addEventListener('click',function(){mySet(i)});myT.appendChild(b)});
+mySet(0);
+
+/* answer demo */
+function tnow(){var d=new Date(),h=d.getHours(),m=d.getMinutes(),ap=h>=12?'P.M.':'A.M.';h=h%12||12;return h+':'+(m<10?'0':'')+m+' '+ap}
+var ANS={taken:['Taken','Dose marked as taken. Family sees it in the app.'],snooze:['Snoozed','Myra will remind again in 10 minutes.'],skip:['Skipped','Dose recorded as skipped, so the doctor knows.']};
+$$('[data-ans]').forEach(function(b){b.addEventListener('click',function(){var a=ANS[b.dataset.ans];$('#ansLog').innerHTML='<b>'+a[0]+' at '+tnow()+'</b>'+a[1]+' Saved to history.'})});
+
+/* pulse demo */
+var pb=$('#pulseBtn'),pt=null;
+pb.addEventListener('click',function(){
+  clearInterval(pt);var n=10,fg=$('#ringFg');
+  $('#pulseOut').hidden=true;pb.disabled=true;
+  fg.style.transition='none';fg.style.strokeDashoffset='0';void fg.getBoundingClientRect();
+  fg.style.transition=RM?'none':'stroke-dashoffset 10s linear';fg.style.strokeDashoffset='408';
+  $('#ringV').textContent=n;$('#pulseNote').textContent='Hold still. Fingertip on the sensor.';
+  pt=setInterval(function(){n--;$('#ringV').textContent=n;if(n<=0){clearInterval(pt);pb.disabled=false;pb.textContent='Run again';$('#pulseOut').hidden=false;$('#pulseNote').textContent='Example numbers for this demo only. Saved for the logged-in patient on the real device.'}},1000);
+});
+
+/* safety / tech / next / pins */
+var SAFE=[['Careful answers','Myra gives general information only and advises seeing a doctor for anything serious.','#FFD84D'],['Protected logins','Passwords and PINs are stored hashed, never as plain text; repeated wrong tries are blocked.','#FF5CAA'],['Private per patient','Each patient sees only their own medicines and readings.','#35E8C4'],['No personal data to AI','Only the question text is sent to Gemini, never names or records.','#FF8A2B'],['Works offline','Reminders, history, touchscreen, LEDs and buzzer all work without internet.','#8F6BFF'],['Secure access','HTTPS through Cloudflare Tunnel, CSRF protection and auto log-out.','#22A58B']];
+$('#safeGrid').innerHTML=SAFE.map(function(s,i){return '<div class="stk rv"><div class="ico" style="background:'+s[2]+'">'+(i+1)+'</div><h3>'+s[0]+'</h3><p>'+s[1]+'</p></div>'}).join('');
+var LAY=[['Cloud services',['Google Gemini AI','Open-Meteo weather + AQI','Cloudflare Tunnel'],'#FFD84D'],['Python application',['Vosk speech','Piper voice','Flask + Waitress','SQLite','Pillow (Hindi)'],'#FF5CAA'],['Operating system',['Raspberry Pi OS (Debian 13)','PipeWire audio + Bluetooth','systemd auto-start'],'#35E8C4'],['Arduino firmware (C++)',['Display + touch driver','ECG + pulse reader','LED + buzzer control'],'#FF8A2B'],['Hardware',['Raspberry Pi 5','Arduino UNO ×2','Sensors, LEDs, buzzer'],'#BEE3E8']];
+$('#layers').innerHTML=LAY.map(function(l){return '<div class="layer rv" style="background:'+l[2]+'"><h3>'+l[0]+'</h3><div class="chips">'+l[1].map(function(x){return '<span class="chip">'+x+'</span>'}).join('')+'</div></div>'}).join('');
+var PINS=[['AD8232','OUT / LO+ / LO−','A0 / D10 / D11'],['AD8232','3.3V / GND','3.3V / GND'],['MAX30100','SDA / SCL','A4 / A5'],['MAX30100','VIN / GND','3.3V / GND'],['Indicator LEDs','R / Y / G','D5 / D6 / D7'],['Buzzer','+ / −','D8 / GND'],['Touchscreen','Shield','on Arduino #1']];
+$('#pinBody').innerHTML=PINS.map(function(r){return '<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>'}).join('');
+var NX=[['Android app on Play Store','Package the MediCare app as an installable APK.'],['Family alerts','SMS or WhatsApp message to family when a dose is missed.'],['More health sensors','Blood pressure and body temperature monitoring.'],['Doctor reports','One-tap PDF report of medicines and ECG for the doctor.'],['Fall detection','Alert family if an elder falls at home.']];
+$('#nextGrid').innerHTML=NX.map(function(n,i){return '<div class="stk nx rv"><div class="n">+'+(i+1)+'</div><h3>'+n[0]+'</h3><p>'+n[1]+'</p></div>'}).join('');
+
+/* circuit */
+(function(){
+var oy=50,s='',W={r:'#E24C4C',g:'#2FA15E',b:'#2D5BD8',k:'var(--line)',y:'#E8A800',o:'#FF8A2B'};
+var box=function(x,y,w,h,t,sub){return '<rect class="bx" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="12"/><text x="'+(x+w/2)+'" y="'+(y+22)+'" text-anchor="middle" style="font-size:14px;font-weight:900">'+t+'</text>'+(sub?'<text x="'+(x+w/2)+'" y="'+(y+40)+'" text-anchor="middle" style="font-size:11.5px">'+sub+'</text>':'')};
+/* top */
+s+='<path class="w" stroke="'+W.k+'" d="M420 36 V60" stroke-dasharray="6 5"/>';
+s+=box(320,4,200,32,'27 W USB-C supply','');
+s+='<rect class="bx" x="300" y="60" width="240" height="46" rx="12" style="fill:var(--butter)"/><text x="420" y="88" text-anchor="middle" style="font-size:15px;font-weight:900;fill:#17120F">Raspberry Pi 5</text>';
+s+='<rect class="bx" x="590" y="60" width="190" height="46" rx="12"/><text x="685" y="80" text-anchor="middle" style="font-size:13px;font-weight:900">Arduino #1</text><text x="685" y="96" text-anchor="middle" style="font-size:11px">touchscreen shield</text>';
+s+='<path class="w" stroke="'+W.o+'" d="M540 83 H590"/><text x="565" y="74" text-anchor="middle" style="font-size:10.5px;font-weight:700">USB</text>';
+s+='<rect class="bx" x="20" y="60" width="190" height="46" rx="12"/><text x="115" y="80" text-anchor="middle" style="font-size:13px;font-weight:900">Bluetooth speaker</text><text x="115" y="96" text-anchor="middle" style="font-size:11px">with microphone</text>';
+s+='<path class="w" stroke="'+W.b+'" stroke-dasharray="3 7" d="M210 83 H300"/><text x="255" y="74" text-anchor="middle" style="font-size:10.5px;font-weight:700">Bluetooth</text>';
+/* arduino 2 */
+s+='<rect class="ard" x="280" y="'+(oy+66)+'" width="280" height="316" rx="14"/><text class="ard-t" x="420" y="'+(oy+92)+'" text-anchor="middle" style="font-size:18px;font-weight:900;fill:#17120F">Arduino #2</text>';
+s+='<path class="w" stroke="'+W.o+'" d="M420 106 V'+(oy+66)+'"/><text x="432" y="'+(oy+40)+'" style="font-size:10.5px;font-weight:700">USB (data + power)</text>';
+var L=[['A0',W.g,140],['D10',W.y,165],['D11',W.y,190],['3.3V',W.r,215],['GND',W.k,240],['A4 SDA',W.b,285],['A5 SCL',W.y,310],['3.3V',W.r,335],['GND',W.k,360]];
+L.forEach(function(p){var y=oy+p[2]+30;s+='<path class="w" stroke="'+p[1]+'" d="M180 '+y+' H280"/><text class="pn" x="288" y="'+(y+4)+'" style="fill:#17120F">'+p[0]+'</text>'});
+var R=[['D5',W.r,140],['D6',W.y,165],['D7',W.g,190],['D8',W.o,245],['GND',W.k,270]];
+R.forEach(function(p){var y=oy+p[2]+30;s+='<path class="w" stroke="'+p[1]+'" d="M560 '+y+' H640"/><text class="pn" x="552" y="'+(y+4)+'" text-anchor="end" style="fill:#17120F">'+p[0]+'</text>'});
+s+=box(20,oy+150,160,130,'AD8232','ECG sensor')+box(20,oy+296,160,98,'MAX30100','pulse oximeter');
+s+=box(640,oy+150,140,100,'LEDs','R · Y · G')+box(640,oy+246,140,72,'Buzzer','+ and −');
+s+='<g transform="translate(640 '+(oy+340)+')"><text x="0" y="0" style="font-size:11.5px;font-weight:900">Wire colours</text>'+[['Signal',W.g],['I²C / lead-off',W.y],['3.3 V',W.r],['GND',W.k]].map(function(l,i){return '<path class="w" stroke="'+l[1]+'" d="M0 '+(16+i*16)+' H26"/><text x="34" y="'+(20+i*16)+'" style="font-size:11px">'+l[0]+'</text>'}).join('')+'</g>';
+document.getElementById('circSvg').innerHTML=s;
+})();
+
+/* misc */
+$('#copyMail').addEventListener('click',function(){
+  var b=this,ok=function(){b.textContent='Copied'};
+  try{navigator.clipboard.writeText('help@pvproyals.in').then(ok,function(){b.textContent='Select the address'})}catch(e){b.textContent='Select the address'}
+});
+
+/* counters + reveal */
+function fmt(n,plus){return n.toLocaleString('en-IN').replace(/,/g,',')+(plus?'+':'')}
+function runCount(el){
+  if(RM||el.dataset.done)return;el.dataset.done=1;
+  var to=+el.dataset.to,plus=el.dataset.plus,t0=null;
+  function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/1400,1),e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(to*e),plus&&p===1);if(p<1)requestAnimationFrame(f)}
+  requestAnimationFrame(f);
+}
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){if(!RM&&e.target.classList.contains('rv'))e.target.classList.add('go');$$('.count',e.target).forEach(runCount);io.unobserve(e.target)}})},{threshold:.12});
+  $$('.rv').forEach(function(el){io.observe(el)});
+}
+})();
+</script>
+
+</body>
+</html>
